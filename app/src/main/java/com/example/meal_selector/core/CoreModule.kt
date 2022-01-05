@@ -3,6 +3,10 @@ package com.example.meal_selector.core
 import android.os.Build
 import com.example.meal_selector.BuildConfig
 import com.example.meal_selector.core.commons.constants.Constants
+import com.example.meal_selector.core.repositories.cocktails.CocktailRepository
+import com.example.meal_selector.core.repositories.cocktails.DefaultCocktailRepository
+import com.example.meal_selector.core.repositories.meal.DefaultMealRepository
+import com.example.meal_selector.core.repositories.meal.MealRepository
 import com.example.meal_selector.core.services.NetworkService
 import com.example.meal_selector.core.services.debugInterceptor.DebugInterceptor
 import com.example.meal_selector.core.services.retrofit.RetrofitNetworkService
@@ -20,16 +24,32 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun provideNetworkService(
+    internal fun provideNetworkService(
         client: OkHttpClient
     ): NetworkService = RetrofitNetworkService(client)
 
     @Provides
     @Singleton
-    fun provideHttpClient(interceptor: DebugInterceptor): OkHttpClient =
+    internal fun provideHttpClient(interceptor: DebugInterceptor): OkHttpClient =
         OkHttpClient.Builder().addInterceptor(interceptor).build()
 
     @Provides
     @Singleton
-    fun providesInterceptor(): DebugInterceptor = DebugInterceptor()
+    internal fun providesInterceptor(): DebugInterceptor = DebugInterceptor()
+
+    @Provides
+    @Singleton
+    internal fun providesMealRepository(
+        networkService: NetworkService
+    ): MealRepository {
+        return DefaultMealRepository(networkService.getMealDataProvider())
+    }
+
+    @Provides
+    @Singleton
+    internal fun providesCocktailRepository(
+        networkService: NetworkService
+    ): CocktailRepository {
+        return DefaultCocktailRepository(networkService.getCocktailDataProvider())
+    }
 }
