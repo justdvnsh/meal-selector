@@ -16,6 +16,6 @@ interface LaunchViewModel: ViewModel {
     }
 
     interface ViewData: ViewModel.ViewData {
-        val startRootActivity: PublishSubject<Unit>
+        val startRootActivity: PublishSubject<String>
     }
 }

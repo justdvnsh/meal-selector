@@ -2,6 +2,7 @@ package com.example.meal_selector.presentation
 
 import com.example.meal_selector.presentation.screens.launch.DefaultLaunchViewModel
 import com.example.meal_selector.presentation.screens.launch.LaunchViewModel
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
@@ -9,7 +10,7 @@ import dagger.Provides
 class PresentationModule {
 
     @Provides
-    internal fun provideLaunchScreenViewModel(): LaunchViewModel {
+    internal fun provideLaunchScreenViewModel(): DefaultLaunchViewModel {
         return DefaultLaunchViewModel()
     }
 }

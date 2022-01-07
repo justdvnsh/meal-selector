@@ -3,6 +3,7 @@ package com.example.meal_selector.core.services.retrofit
 import com.example.meal_selector.BuildConfig
 import com.example.meal_selector.core.apis.cocktail.CocktailDataProvider
 import com.example.meal_selector.core.apis.meal.MealDataProvider
+import com.example.meal_selector.core.commons.constants.Constants.Companion.BASE_URL_MEAL
 import com.example.meal_selector.core.services.NetworkService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -19,11 +20,13 @@ class RetrofitNetworkService(
     private var cocktailDataProvider: CocktailDataProvider? = null
 
     private val retrofit = if (isDevBuild()) Retrofit.Builder()
+        .baseUrl(BASE_URL_MEAL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
     else Retrofit.Builder()
+        .baseUrl(BASE_URL_MEAL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build()

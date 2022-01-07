@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class DefaultLaunchViewModel: LaunchViewModel, BaseViewModel() {
 
-    private val startRootActivitySubject: PublishSubject<Unit> = PublishSubject.create()
+    private val startRootActivitySubject: PublishSubject<String> = PublishSubject.create()
 
     override fun set(viewEvent: LaunchViewModel.ViewEvent): Disposable {
         compositeDisposable = CompositeDisposable()
@@ -20,7 +20,7 @@ class DefaultLaunchViewModel: LaunchViewModel, BaseViewModel() {
                 .debounce(3000, TimeUnit.MILLISECONDS)
                 .subscribe(
                     {
-                        startRootActivitySubject.onNext(Unit)
+                        startRootActivitySubject.onNext(it)
                     },
                     {}
                 )
@@ -31,7 +31,7 @@ class DefaultLaunchViewModel: LaunchViewModel, BaseViewModel() {
 
     override fun generateViewData(): LaunchViewModel.ViewData {
         return object : LaunchViewModel.ViewData {
-            override val startRootActivity: PublishSubject<Unit>
+            override val startRootActivity: PublishSubject<String>
                 get() = startRootActivitySubject
             override val loading: Observable<Boolean>
                 get() = Observable.never()
