@@ -37,4 +37,6 @@ class DefaultLaunchViewModel: LaunchViewModel, BaseViewModel() {
                 get() = Observable.never()
         }
     }
+
+    // something to be removed from here. Just for the git config
 }
